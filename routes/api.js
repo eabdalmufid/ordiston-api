@@ -30,7 +30,6 @@ const listkey = global.apikey
 
 const { Configuration, OpenAIApi, openai } = require("openai");
 const scr = require('@bochilteam/scraper');
-const lol = require('lolkil-scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
 const { fetchJson } = require(__path + '/lib/fetcher.js')
 const options = require(__path + '/lib/options.js');
@@ -368,13 +367,18 @@ router.get('/download/tiktok', async (req, res, next) => {
        	if(!apikey) return res.json(loghandler.noapikey)
         if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-        scr.tiktokdl(url).catch(async _ => scr.tiktokdlv2(url)).catch(async _ => scr.tiktokdlv3(url))
-		.then(data => {
-		var result = data;
-		res.json({
-			result
-		})
-		})
+        const { author: { nickname }, video, description } = await scr.tiktokdl(url)
+        .catch(async _ => await scr.tiktokdlv2(url))
+        .catch(async _ => await tiktokdlv3(url))
+        const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
+        if (!url) return res.json(loghandler.eror)
+        let kin = await video.download()
+         res.json({
+			author: nickname,
+			description: description,
+			title: title,
+			download: kin
+         })
          .catch(e => {
          	console.log(e);
          	res.json(loghandler.error)
@@ -383,30 +387,6 @@ router.get('/download/tiktok', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
-/*router.get('/download/tiktok', async (req, res, next) => {
-    var Apikey = req.query.apikey,
-    url = req.query.url
-    if(!Apikey) return res.json(loghandler.notparam)
-    if(listkey.includes(Apikey)){
-    if (!url) return res.json(loghandler.noturl)
-     lol.download.tiktok(url)
-     .then(async data => {
-         var result = {
-            statusCode: 200,
-            coder: coder,
-            result: data.result
-         };
-         res.json(result);
-         })
-         .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-        });
-      } else {
-     res.json(loghandler.apikey)
-     }
-});*/
-
 router.get('/download/ytmp3', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
