@@ -27,6 +27,21 @@ var router  = express.Router();
 var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var creator = global.creator
 const listkey = global.apikey
+var {
+  ttdownloader,
+  pinterest,
+  fbdown,
+  igstalk,
+  igstory,
+  igdl,
+  linkwa,
+  igDownloader
+} = require("./../lib/anjay");
+
+var {
+  igStalk,
+  igDownloader
+} = require("./../lib/utils/igdown");
 
 const { Configuration, OpenAIApi, openai } = require("openai");
 const scr = require('@bochilteam/scraper');
@@ -253,7 +268,7 @@ router.get('/download/facebook', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
-router.get('/download/instagram', async (req, res, next) => {
+/*router.get('/download/instagram', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
@@ -271,7 +286,29 @@ router.get('/download/instagram', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})
+})*/
+router.get('/download/instagram', async(req, res, next) => {
+  const url = req.query.url;
+  const apikey = req.query.apikey;
+  if(!url) return res.json(loghandler.noturl)
+  if(!apikey) return res.json(loghandler.noapikey)
+  if(listkey.includes(apikey)){
+  igDownloader(url)
+    .then((result) => {
+      res.json({
+        status: true,
+        code: 200,
+        creator: `${creator}`,
+        result
+      })
+    })
+    .catch((error) => {
+      res.json(error)
+    });
+    } else {
+    	res.json(loghandler.apikey)
+    }
+});
 router.get('/download/pinterest', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.q
