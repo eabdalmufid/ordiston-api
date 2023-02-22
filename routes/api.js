@@ -364,7 +364,7 @@ router.get('/download/pinterest', async (req, res, next) => {
 })
 /*router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
-          url = req.query.url
+          var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
@@ -383,7 +383,7 @@ router.get('/download/pinterest', async (req, res, next) => {
 })*/
 router.get('/download/tiktok', async (req, res, next) => {
     var Apikey = req.query.apikey,
-    var url = req.query.url
+    url = req.query.url
     if(!Apikey) return res.json(loghandler.notparam)
     if(listkey.includes(Apikey)){
     if (!url) return res.json(loghandler.noturl)
