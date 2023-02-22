@@ -24,6 +24,7 @@ var cheerio = require('cheerio');
 var request = require('request');
 var fs = require('fs');
 var router  = express.Router();
+var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var creator = global.creator
 const listkey = global.apikey
 
@@ -292,7 +293,7 @@ router.get('/download/pinterest', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
-router.get('/download/tiktok', async (req, res, next) => {
+/*router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
@@ -310,7 +311,31 @@ router.get('/download/tiktok', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})
+})*/
+router.get('/download/tiktok', async (req, res, next) => {
+    var Apikey = req.query.apikey,
+        url = req.query.url
+
+	if(!Apikey) return res.json(loghandler.notparam)
+	if(listkey.includes(Apikey)){
+     if (!url) return res.json(loghandler.noturl)
+     TiktokDownloader(`${url}`)
+        .then(data => {
+        var result = data.result;
+             res.json({
+               status: true,
+               code: 200,
+               creator: `${creator}`,
+               result
+             })
+         })
+         .catch((error) => {
+            res.json(error);
+        });
+      } else {
+     res.json(loghandler.apikey)
+     }
+});
 router.get('/download/ytmp3', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
