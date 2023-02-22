@@ -298,7 +298,7 @@ router.get('/download/tiktok', async (req, res, next) => {
        	if(!apikey) return res.json(loghandler.noapikey)
        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url))
+       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url)).catch(async _ => await scr.tiktokdlv3(url))
 		var result = ttlu;
 		res.json({
 			result
