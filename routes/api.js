@@ -29,7 +29,7 @@ var creator = global.creator
 const listkey = global.apikey
 
 const { Configuration, OpenAIApi, openai } = require("openai");
-const { tiktokdl, tiktokdlv2, tiktokdlv2 } = require('@bochilteam/scraper');
+const { tiktokdl, tiktokdlv2, tiktokdlv3 } = require('@bochilteam/scraper');
 const scr = require('@bochilteam/scraper');
 const lol = require('lolkil-scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
