@@ -29,7 +29,6 @@ var creator = global.creator
 const listkey = global.apikey
 
 const { Configuration, OpenAIApi, openai } = require("openai");
-const { tiktokdl, tiktokdlv2, tiktokdlv3 } = require('@bochilteam/scraper');
 const scr = require('@bochilteam/scraper');
 const lol = require('lolkil-scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
@@ -367,12 +366,14 @@ router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-       let ttlu = await tiktokdl(url).catch(async _ => await tiktokdlv2(url)).catch(async _ => await tiktokdlv3(url))
-		var result = ttlu;
+        scr.tiktokdl(url).catch(async _ => scr.tiktokdlv2(url)).catch(async _ => scr.tiktokdlv3(url))
+		.then(data => {
+		var result = data;
 		res.json({
 			result
+		})
 		})
          .catch(e => {
          	console.log(e);
