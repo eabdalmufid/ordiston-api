@@ -290,8 +290,9 @@ router.get('/download/facebook', async (req, res, next) => {
         result
       })
     })
-    .catch((error) => {
-      res.json(error)
+    .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
     });
     } else {
     	res.json(loghandler.apikey)
@@ -331,8 +332,9 @@ router.get('/download/instagram', async(req, res, next) => {
         result
       })
     })
-    .catch((error) => {
-      res.json(error)
+    .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
     });
     } else {
     	res.json(loghandler.apikey)
@@ -395,8 +397,9 @@ router.get('/download/tiktok', async (req, res, next) => {
                result
              })
          })
-         .catch((error) => {
-            res.json(error);
+         .catch(e => {
+         	console.log(e);
+         	res.json(loghandler.error)
         });
       } else {
      res.json(loghandler.apikey)
