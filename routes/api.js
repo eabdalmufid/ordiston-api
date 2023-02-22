@@ -833,7 +833,7 @@ router.get('/random/asupan', async (req, res, next) => {
        	var text = req.query.page
        	if(!apikey) return res.json(loghandler.noapikey)
         if(listkey.includes(apikey)){
-  const Asupan = JSON.parse(fs.readFileSync('https://raw.githubusercontent.com/NzrlAfndi/Databasee/main/Dosa/asupan.json'));
+  const Asupan = JSON.parse(fs.readFileSync(__path +'/database/asupantiktok.json'));
   const randAsupan = Asupan[Math.floor(Math.random() * Asupan.length)];
   data = await fetch(randAsupan).then(v => v.buffer()) 
   //data = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${lolkey}`)
