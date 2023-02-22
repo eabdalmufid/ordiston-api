@@ -47,6 +47,7 @@
     "jimp": "^0.16.2",
     "jquery": "^3.6.3",
     "lodash": "^4.17.20",
+    "lolkil-scraper": "github:LoliKillers/lolkil-scraper",
     "moment-timezone": "^0.5.40",
     "mongoose": "^6.9.2",
     "needle": "^2.6.0",
