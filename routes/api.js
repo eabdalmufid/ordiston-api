@@ -27,6 +27,22 @@ var router  = express.Router();
 var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var creator = global.creator
 const listkey = global.apikey
+
+const { Configuration, OpenAIApi, openai } = require("openai");
+const scr = require('@bochilteam/scraper');
+const { color, bgcolor } = require(__path + '/lib/color.js');
+const { fetchJson } = require(__path + '/lib/fetcher.js')
+const options = require(__path + '/lib/options.js');
+const { getBuffer } = require(__path + '/lib/functions.js');
+const oxy = require(__path + '/lib/oxy.js');
+
+var {
+	Vokal,
+	Base,
+	Searchnabi,
+    Gempa
+} = require('./../lib');
+
 var {
   ttdownloader,
   pinterest,
@@ -43,20 +59,10 @@ var {
   igDownloader
 } = require("./../lib/utils/igdown");
 
-const { Configuration, OpenAIApi, openai } = require("openai");
-const scr = require('@bochilteam/scraper');
-const { color, bgcolor } = require(__path + '/lib/color.js');
-const { fetchJson } = require(__path + '/lib/fetcher.js')
-const options = require(__path + '/lib/options.js');
-const { getBuffer } = require(__path + '/lib/functions.js');
-const oxy = require(__path + '/lib/oxy.js');
-
 var {
-	Vokal,
-	Base,
-	Searchnabi,
-    Gempa
-} = require('./../lib');
+  fbDownloader,
+  fbdown2
+} = require('./../lib/utils/fbdl');
 
 _ = require('lodash')
 
@@ -250,7 +256,7 @@ router.get('/cecan/malaysia', async (req, res, next) => {
 })
 
 //downloader
-router.get('/download/facebook', async (req, res, next) => {
+/*router.get('/download/facebook', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
@@ -267,7 +273,30 @@ router.get('/download/facebook', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})
+})*/
+router.get('/download/facebook', async (req, res, next) => {
+
+  const url = req.query.url;
+  const apikey = req.query.apikey;
+  if(!url) return res.json(loghandler.noturl)
+  if(!apikey) return res.json(loghandler.noapikey)
+  if(listkey.includes(apikey)){
+       fbDownloader(`${url}`)
+       .then((result) => {
+            res.json({
+        status: true,
+        code: 200,
+        creator: `${creator}`,
+        result
+      })
+    })
+    .catch((error) => {
+      res.json(error)
+    });
+    } else {
+    	res.json(loghandler.apikey)
+    }
+});
 /*router.get('/download/instagram', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
