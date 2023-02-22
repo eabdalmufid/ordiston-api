@@ -369,14 +369,14 @@ router.get('/download/tiktok', async (req, res, next) => {
         if(listkey.includes(apikey)){
         const { author: { nickname }, video, description } = await scr.tiktokdl(url)
         .catch(async _ => await scr.tiktokdlv2(url))
-        .catch(async _ => await tiktokdlv3(url))
-        const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
-        if (!url) return res.json(loghandler.eror)
+        .catch(async _ => await scr.tiktokdlv3(url))
+        const kin = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
+        if (!kin) return res.json(loghandler.eror)
          res.json({
 			author: nickname,
 			description: description,
 			title: title,
-			download: url
+			download: kin
          })
          .catch(e => {
          	console.log(e);
