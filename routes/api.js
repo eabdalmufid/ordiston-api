@@ -30,6 +30,7 @@ const listkey = global.apikey
 
 const { Configuration, OpenAIApi, openai } = require("openai");
 const scr = require('@bochilteam/scraper');
+const lol = require('lolkil-scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
 const { fetchJson } = require(__path + '/lib/fetcher.js')
 const options = require(__path + '/lib/options.js');
@@ -382,20 +383,18 @@ router.get('/download/pinterest', async (req, res, next) => {
 })*/
 router.get('/download/tiktok', async (req, res, next) => {
     var Apikey = req.query.apikey,
-        url = req.query.url
-
-	if(!Apikey) return res.json(loghandler.notparam)
-	if(listkey.includes(Apikey)){
-     if (!url) return res.json(loghandler.noturl)
-     TiktokDownloader(`${url}`)
-        .then(data => {
-        var result = data.result;
-             res.json({
-               status: true,
-               code: 200,
-               creator: `${creator}`,
-               result
-             })
+    var url = req.query.url
+    if(!Apikey) return res.json(loghandler.notparam)
+    if(listkey.includes(Apikey)){
+    if (!url) return res.json(loghandler.noturl)
+     lol.download.tiktok(url)
+     .then(async data => {
+         var result = {
+            statusCode: 200,
+            coder: coder,
+            result: data.result
+         };
+         res.json(result);
          })
          .catch(e => {
          	console.log(e);
@@ -405,6 +404,7 @@ router.get('/download/tiktok', async (req, res, next) => {
      res.json(loghandler.apikey)
      }
 });
+
 router.get('/download/ytmp3', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
