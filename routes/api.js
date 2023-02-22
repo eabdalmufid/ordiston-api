@@ -27,8 +27,8 @@ var router  = express.Router();
 var creator = global.creator
 const listkey = global.apikey
 
-const { Configuration, OpenAIApi, openai } = require("openai")
-const scr = require ('@bochilteam/scraper')
+const { Configuration, OpenAIApi, openai } = require("openai");
+const scr = require('@bochilteam/scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
 const { fetchJson } = require(__path + '/lib/fetcher.js')
 const options = require(__path + '/lib/options.js');
