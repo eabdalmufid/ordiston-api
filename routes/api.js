@@ -29,6 +29,7 @@ var creator = global.creator
 const listkey = global.apikey
 
 const { Configuration, OpenAIApi, openai } = require("openai");
+const { tiktokdl, tiktokdlv2, tiktokdlv2 } = require('@bochilteam/scraper');
 const scr = require('@bochilteam/scraper');
 const lol = require('lolkil-scraper');
 const { color, bgcolor } = require(__path + '/lib/color.js');
@@ -362,13 +363,13 @@ router.get('/download/pinterest', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
-/*router.get('/download/tiktok', async (req, res, next) => {
+router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url)).catch(async _ => await scr.tiktokdlv3(url))
+       let ttlu = await tiktokdl(url).catch(async _ => await tiktokdlv2(url)).catch(async _ => await tiktokdlv3(url))
 		var result = ttlu;
 		res.json({
 			result
@@ -380,8 +381,8 @@ router.get('/download/pinterest', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})*/
-router.get('/download/tiktok', async (req, res, next) => {
+})
+/*router.get('/download/tiktok', async (req, res, next) => {
     var Apikey = req.query.apikey,
     url = req.query.url
     if(!Apikey) return res.json(loghandler.notparam)
@@ -403,7 +404,7 @@ router.get('/download/tiktok', async (req, res, next) => {
       } else {
      res.json(loghandler.apikey)
      }
-});
+});*/
 
 router.get('/download/ytmp3', async (req, res, next) => {
           var apikey = req.query.apikey
