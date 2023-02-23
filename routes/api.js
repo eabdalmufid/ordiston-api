@@ -24,7 +24,6 @@ var cheerio = require('cheerio');
 var request = require('request');
 var fs = require('fs');
 var router  = express.Router();
-var { TiktokDownloader } = require('../lib/tiktokdl.js')
 var creator = global.creator
 const listkey = global.apikey
 
@@ -42,22 +41,6 @@ var {
 	Searchnabi,
     Gempa
 } = require('./../lib');
-
-var {
-  ttdownloader,
-  pinterest,
-  fbdown,
-  igstalk,
-  igstory,
-  igdl,
-  linkwa,
-  igDownloader
-} = require("./../lib/anjay");
-
-var {
-  igStalk,
-  igDownloader
-} = require("./../lib/utils/igdown");
 
 var {
   fbDownloader,
@@ -317,29 +300,6 @@ router.get('/download/instagram', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
-/*router.get('/download/instagram', async(req, res, next) => {
-  const url = req.query.url;
-  const apikey = req.query.apikey;
-  if(!url) return res.json(loghandler.noturl)
-  if(!apikey) return res.json(loghandler.noapikey)
-  if(listkey.includes(apikey)){
-  igDownloader(url)
-    .then((result) => {
-      res.json({
-        status: true,
-        code: 200,
-        creator: `${creator}`,
-        result
-      })
-    })
-    .catch(e => {
-         	console.log(e);
-         	res.json(loghandler.error)
-    });
-    } else {
-    	res.json(loghandler.apikey)
-    }
-});*/
 router.get('/download/pinterest', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.q
@@ -365,10 +325,10 @@ router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
-       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
         if(listkey.includes(apikey)){
-       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url))
-		var result = ttlu;
+       let tiklu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url)).catch(async _ => await scr.tiktokdlv3(url))
+		var result = tiklu;
 		res.json({
 			result
 		})
