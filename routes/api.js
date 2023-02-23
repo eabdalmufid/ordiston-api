@@ -239,13 +239,14 @@ router.get('/cecan/malaysia', async (req, res, next) => {
 })
 
 //downloader
-/*router.get('/download/facebook', async (req, res, next) => {
+router.get('/download/facebook', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
         if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-        const result = await scr.savefrom(url)
+        let face = await scr.facebookdl(url).catch(async _ => await scr.facebookdlv2(url)).catch(async _ => await scr.facebookdlv3(url))
+        var result = face;
              res.json({
                  result
              })
@@ -256,8 +257,8 @@ router.get('/cecan/malaysia', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})*/
-router.get('/download/facebook', async (req, res, next) => {
+})
+/*router.get('/download/facebook', async (req, res, next) => {
 
   const url = req.query.url;
   const apikey = req.query.apikey;
@@ -280,7 +281,7 @@ router.get('/download/facebook', async (req, res, next) => {
     } else {
     	res.json(loghandler.apikey)
     }
-});
+});*/
 router.get('/download/instagram', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
@@ -327,8 +328,8 @@ router.get('/download/tiktok', async (req, res, next) => {
        	if(!apikey) return res.json(loghandler.noapikey)
        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter username"})
         if(listkey.includes(apikey)){
-       let tiklu = await scr.tiktokdlv3(url)  //.catch(async _ => await scr.tiktokdlv2(url)).catch(async _ => await scr.tiktokdlv3(url))
-		var result = tiklu;
+       let toke = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url)).catch(async _ => await scr.tiktokdlv3(url))
+		var result = toke;
 		res.json({
 			result
 		})
