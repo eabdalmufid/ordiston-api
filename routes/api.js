@@ -239,7 +239,7 @@ router.get('/cecan/malaysia', async (req, res, next) => {
 })
 
 //downloader
-router.get('/download/facebook', async (req, res, next) => {
+/*router.get('/download/facebook', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
@@ -257,8 +257,8 @@ router.get('/download/facebook', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})
-/*router.get('/download/facebook', async (req, res, next) => {
+})*/
+router.get('/download/facebook', async (req, res, next) => {
 
   const url = req.query.url;
   const apikey = req.query.apikey;
@@ -281,7 +281,7 @@ router.get('/download/facebook', async (req, res, next) => {
     } else {
     	res.json(loghandler.apikey)
     }
-});*/
+});
 router.get('/download/instagram', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
