@@ -298,7 +298,7 @@ router.get('/download/facebook', async (req, res, next) => {
     	res.json(loghandler.apikey)
     }
 });
-/*router.get('/download/instagram', async (req, res, next) => {
+router.get('/download/instagram', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
@@ -316,8 +316,8 @@ router.get('/download/facebook', async (req, res, next) => {
 } else {
   res.json(loghandler.apikey)
 }
-})*/
-router.get('/download/instagram', async(req, res, next) => {
+})
+/*router.get('/download/instagram', async(req, res, next) => {
   const url = req.query.url;
   const apikey = req.query.apikey;
   if(!url) return res.json(loghandler.noturl)
@@ -339,7 +339,7 @@ router.get('/download/instagram', async(req, res, next) => {
     } else {
     	res.json(loghandler.apikey)
     }
-});
+});*/
 router.get('/download/pinterest', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.q
@@ -365,20 +365,13 @@ router.get('/download/tiktok', async (req, res, next) => {
           var apikey = req.query.apikey
           var url = req.query.url
        	if(!apikey) return res.json(loghandler.noapikey)
-        if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
+       if (!url) return res.json({ status : false, creator : `${creator}`, message : "masukan parameter url"})
         if(listkey.includes(apikey)){
-        const { author: { nickname }, video, description } = await scr.tiktokdl(url)
-        .catch(async _ => await scr.tiktokdlv2(url))
-        .catch(async _ => await scr.tiktokdlv3(url))
-        const kin = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
-        if (!kin) return res.json(loghandler.eror)
-        let lru = await kin.download()
-         res.json({
-			author: nickname,
-			description: description,
-			title: title,
-			download: lru
-         })
+       let ttlu = await scr.tiktokdl(url).catch(async _ => await scr.tiktokdlv2(url))
+		var result = ttlu;
+		res.json({
+			result
+		})
          .catch(e => {
          	console.log(e);
          	res.json(loghandler.error)
