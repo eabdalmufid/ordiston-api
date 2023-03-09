@@ -56,6 +56,7 @@ app.get('/docs', (req, res) => {
     res.sendFile(__path + '/docs/index.html')
 })
 
+
 app.use('/api', apirouter)
 app.use("/", mainrouter)
 
